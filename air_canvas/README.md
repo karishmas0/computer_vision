@@ -3,6 +3,8 @@
 A computer vision project that turns your webcam into a drawing pad. You
 draw by moving your index finger in the air — no mouse, no touchscreen.
 
+![Air Canvas screenshot](screenshot.png)
+
 ## How it works (step by step)
 
 1. **Webcam captures video**, one frame (image) at a time, using OpenCV.
@@ -47,17 +49,19 @@ A window will open showing your webcam feed with a color toolbar on top.
 
 ## Controls
 
-| Gesture / Key            | Action                          |
-|---------------------------|----------------------------------|
-| Index finger only up       | Draw                             |
-| Index + middle finger up   | Selection mode (pick color/eraser by hovering over toolbar) |
-| `c` key                    | Clear the whole canvas          |
-| `s` key                    | Save your drawing as a PNG here |
-| `q` key                    | Quit                             |
+| Gesture / Key                     | Action                          |
+|------------------------------------|----------------------------------|
+| Index finger only up               | Draw (normal brush)             |
+| Index + pinky up (middle/ring down)| Draw with a thicker brush        |
+| Index + middle finger up           | Selection mode (pick color/eraser by hovering over toolbar) |
+| `c` key                            | Clear the whole canvas          |
+| `s` key                            | Save your drawing as a PNG here |
+| `q` key                            | Quit                             |
+
+Colors available on the toolbar: Blue, Green, Red, Yellow, Purple, Orange, Eraser.
 
 ## Ideas to extend this later (optional)
 
-- Add brush thickness control (e.g. pinky up = thicker line).
 - Save drawings with a timestamped filename gallery.
 - Add shape detection (recognize circles/squares you draw and redraw them perfectly).
 - Swap MediaPipe's hand tracking for a custom-trained gesture classifier as a next step up in difficulty.

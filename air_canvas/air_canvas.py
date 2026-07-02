@@ -5,6 +5,7 @@ Draw in the air using your index finger, tracked live through your webcam.
 
 Controls (done with your hand, no keyboard/mouse):
   - Hold up ONLY your index finger              -> draw
+  - Hold up index + pinky too (middle/ring down) -> draw with a thicker brush
   - Hold up your index + middle finger together  -> "selection mode":
         move over the top toolbar to pick a color or the eraser
   - Any other hand shape (fist, all fingers up)  -> pen lifted, nothing drawn
@@ -25,6 +26,7 @@ from hand_tracker import HandTracker
 CAM_WIDTH, CAM_HEIGHT = 1280, 720
 TOOLBAR_HEIGHT = 100
 DRAW_THICKNESS = 8
+THICK_DRAW_THICKNESS = 22
 ERASER_THICKNESS = 50
 
 # name, BGR color, x-range on the toolbar (filled in below)
@@ -33,6 +35,8 @@ COLORS = [
     ("Green",  (0, 255, 0)),
     ("Red",    (0, 0, 255)),
     ("Yellow", (0, 255, 255)),
+    ("Purple", (211, 0, 148)),
+    ("Orange", (0, 140, 255)),
     ("Eraser", (0, 0, 0)),
 ]
 
@@ -112,9 +116,13 @@ def main():
                         draw_name, draw_color = name, color
 
             elif index_up and not middle_up:
-                # Draw mode.
+                # Draw mode. Pinky up as well switches to a thicker brush.
                 if index_tip[1] > TOOLBAR_HEIGHT:  # don't draw over the toolbar
-                    thickness = ERASER_THICKNESS if draw_name == "Eraser" else DRAW_THICKNESS
+                    pinky_up = fingers[4] == 1
+                    if draw_name == "Eraser":
+                        thickness = ERASER_THICKNESS
+                    else:
+                        thickness = THICK_DRAW_THICKNESS if pinky_up else DRAW_THICKNESS
                     if prev_point is None:
                         prev_point = index_tip
                     cv2.line(canvas, prev_point, index_tip, draw_color, thickness)
